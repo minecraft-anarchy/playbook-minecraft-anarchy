@@ -1,0 +1,17 @@
+- hosts: minecraft-anarchy.org
+  vars:
+    letsencrypt_enabled: yes
+
+  roles:
+    - role-letsencrypt
+
+
+  post_tasks:
+
+    - name: run certbot command
+      shell: |
+        certbot certonly --webroot -w /var/www/letsencrypt \
+          -d minecraft-anarchy.org \
+          -d www.minecraft-anarchy.org \
+          -d minecraftanarchy.org \
+          -d www.minecraftanarchy.org

@@ -1,0 +1,9 @@
+- hosts: all
+  become: yes
+  vars:
+    ntp_enabled: yes
+    ntp_timezone: Europe/Berlin
+    ntp_servers: "{{ cloud_provider_ntp_servers }}"
+
+  roles:
+    - role-ntp

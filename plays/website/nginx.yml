@@ -1,0 +1,98 @@
+- hosts: minecraft-anarchy.org
+  become: yes
+  vars:
+    nginx_enabled: yes
+    nginx_vhost_absent:
+      - default
+      - default-ssl
+    nginx_letsencrypt_webroot: /var/www/letsencrypt
+    nginx_dhparam_size: 2048
+  handlers:
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted
+  tasks:
+
+    - name: apt install nginx-light
+      apt:
+        name: nginx-light
+        state: present
+
+    - name: remove files placed by the package maintainer
+      file:
+        state: absent
+        path: /etc/nginx/{{ nginx_absent_file }}
+      with_items:
+        - "sites-enabled/default"
+        - "modules-enabled/50-mod-http-echo.conf"
+      loop_control:
+        loop_var: nginx_absent_file
+
+    - name: setup nginx.conf
+      template:
+        src: templates/etc/nginx/nginx.conf.j2
+        dest: /etc/nginx/nginx.conf
+        owner: root
+        group: root
+        mode: 0750
+
+    - name: create ssl directory for dhparam
+      file:
+        state: directory
+        name: /etc/nginx/ssl
+        owner: root
+        group: root
+        mode: 0750
+
+    - name: create openssl dhparam (may take a while)
+      command: "openssl dhparam -outform PEM -out /etc/nginx/ssl/dh{{ nginx_dhparam_size }}.pem {{ nginx_dhparam_size }}"
+      args:
+        creates: "/etc/nginx/ssl/dh{{ nginx_dhparam_size }}.pem"
+
+    - name: create letsencrypt webroot
+      file:
+        state: directory
+        name: /var/www/letsencrypt
+        owner: www-data
+        group: www-data
+        mode: 0750
+
+    - name: add config snippets
+      template:
+        src: etc/nginx/snippets/{{ nginx_snippet }}.conf.j2
+        dest: /etc/nginx/snippets/{{ nginx_snippet }}.conf
+        mode: 0640
+        owner: root
+        group: root
+      loop_control:
+        loop_var: nginx_snippet
+      with_items:
+        - letsencrypt
+        - ssl
+        - gzip
+      notify: restart nginx
+
+    - name: setup the webroot for www.minecraft-anarchy.org
+      file:
+        state: directory
+        name: /var/www/www.minecraft-anarchy.org
+        owner: www-data
+        group: www-data
+        mode: 0750
+
+    - name: setup the vhost for www.minecraft-anarchy.org
+      template:
+        dest: /etc/nginx/sites-available/www.minecraft-anarchy.org.conf
+        src: templates/etc/nginx/sites-available/www.minecraft-anarchy.org.conf.j2
+        owner: root
+        group: root
+        mode: 0640
+      notify: restart nginx
+
+    - name: enable the vhost for www.minecraft-anarchy.org
+      file:
+        state: link
+        src: /etc/nginx/sites-available/www.minecraft-anarchy.org.conf
+        dest: /etc/nginx/sites-enabled/www.minecraft-anarchy.org.conf
+      notify: restart nginx

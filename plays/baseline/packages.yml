@@ -1,0 +1,25 @@
+- hosts: minecraft-anarchy.org
+  tasks:
+
+    - name: set /etc/default/haveged
+      copy:
+        dest: /etc/default/haveged
+        content: |
+          DAEMON_ARGS="-w 3072"
+
+    - name: install some packages
+      apt:
+        name:
+          - apt-transport-https
+          - aptitude
+          - dnsutils
+          - git
+          - haveged
+          - lsof
+          - net-tools
+          - strace
+          - rsync
+          - tcpdump
+          - telnet
+          - locate
+          - iotop

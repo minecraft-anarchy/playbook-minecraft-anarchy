@@ -1,0 +1,24 @@
+# ANSIBLE
+ansible_user: root
+ansible_ssh_user: root
+
+
+# PLAYS
+
+# IP which exposes tcp:25565 to the public for the minecraft server
+server_public_ip: 94.130.189.20
+
+# DNS servers of the cloud provider
+cloud_provider_dns_servers:
+  - 213.133.99.99
+  - 213.133.100.100
+  - 213.133.98.98
+
+# NTP servers of the cloud provider
+cloud_provider_ntp_servers:
+  - ntp1.hetzner.de
+  - ntp2.hetzner.com
+  - ntp3.hetzner.net
+
+# Set the short hostname
+ansible_hostname_short: minecraft-anarchy

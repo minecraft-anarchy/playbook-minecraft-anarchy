@@ -1,0 +1,136 @@
+- hosts: minecraft-anarchy.org
+  roles:
+    - role-spigot
+  vars_files:
+    # Secret variables
+    - "../../inventory/secrets.yml"
+    # Config variables stored in seperate files for a better overview
+    - "vars/spigot/spigot.yml"
+    - "vars/spigot/server_properties.yml"
+    - "vars/bukkit/bukkit.yml"
+    - "vars/ChatControl/settings.yml"
+    - "vars/PlaytimeRewards/config.yml"
+    - "vars/PlaytimeRewards/lang.yml"
+    - "vars/PlaytimeRewards/rewards.yml"
+
+  vars:
+    # Role settings
+    spigot_download_url: "https://hub.spigotmc.org/jenkins/job/BuildTools/77/artifact/target/BuildTools.jar"
+    # spigot_download_url: "https://hub.spigotmc.org/jenkins/job/BuildTools/lastStableBuild/artifact/target/BuildTools.jar"
+    spigot_version: 1.13.2
+    spigot_max_memory: 3584M
+    spigot_initial_memory: "{{ spigot_max_memory }}"
+
+    # Some directories do not exist before the plugin ist first started once, so create them
+    spigot_plugin_dirs:
+      - /srv/spigot/app/plugins/ChatControl/rules
+      - /srv/spigot/app/plugins/PlaytimeRewards
+      - /srv/spigot/app/plugins/bStats
+
+    # List of locally saved plugins to deploy
+    # Some Plugins can not be downloaded without cloudflare js protection foo, so you can save them locally and upload them here
+    spigot_local_plugins:
+      - "/home/user/code/git/github.com/minecraft-anarchy/lightweight-permissions/target/LightweightPermissions-0.0.1.jar"
+      - "/home/user/code/git/github.com/blunix/playbooks/playbook-minecraft-anarchy/plays/minecraft/templates/srv/spigot/app/plugins/ChatControl.jar"
+      - "/home/user/code/git/github.com/blunix/playbooks/playbook-minecraft-anarchy/plays/minecraft/templates/srv/spigot/app/plugins/PlaytimeRewards.jar"
+
+    # Plugins to download from the internet
+    spigot_internet_plugins: []
+      # - url: "https://github.com/Twi5TeD/PlayTime/raw/master/bin/PlayTime-1.13.jar"
+      #   checksum: "sha256:719a5c2aa3cc073ef0eae5edc3065044d9a4570595aaf28bd711cba723eb6dfe"
+
+
+    # List of config files to template
+    # BUG All config files are re-formatted / re-written after a server restart
+    # Is this serious..? Apps rewriting their own config files..?
+    # Anways, I chmod 0440 them so they stay the same, however this throws errors in the server log later... :/
+    # TODO is there a better solution for this?
+    spigot_config_files:
+
+      # Overwrite the default permissions.yml with empty values
+      - name: /srv/spigot/app/permissions.yml
+        template: "templates/srv/spigot/app/yaml-2.j2"
+        mode: 0440
+        restart: true
+        variables: {}
+
+      - name: /srv/spigot/app/server.properties
+        template: "templates/srv/spigot/app/key=value.j2"
+        mode: 0440
+        restart: true
+        variables: "{{ server_properties }}"
+
+      - name: /srv/spigot/app/bukkit.yml
+        template: templates/srv/spigot/app/yaml-2.j2
+        mode: 0440
+        restart: true
+        variables: "{{ bukkit_configuration }}"
+
+      - name: /srv/spigot/app/spigot.yml
+        template: templates/srv/spigot/app/yaml-2.j2
+        mode: 0440
+        restart: true
+        variables: "{{ spigot_yml_variables }}"
+
+      - name: /srv/spigot/app/eula.txt
+        template: templates/srv/spigot/app/eula.txt.j2
+        mode: 0440
+        restart: true
+        variables: {}
+
+      - name: /srv/spigot/app/ops.json
+        template: templates/srv/spigot/app/json.j2
+        mode: 0440
+        restart: true
+        # moved to secrets.yml
+        variables: "{{ spigot_ops }}"
+
+      - name: /srv/spigot/app/plugins/ChatControl/settings.yml
+        template: templates/srv/spigot/app/yaml-2.j2
+        mode: 0440
+        variables: "{{ chatcontrol_settings }}"
+      - name: /srv/spigot/app/plugins/ChatControl/rules/chat.txt
+        template: templates/srv/spigot/app/plugins/ChatControl/rules/chat.txt
+        mode: 0440
+        variables: {}
+      - name: /srv/spigot/app/plugins/ChatControl/rules/rules.txt
+        template: templates/srv/spigot/app/plugins/ChatControl/rules/rules.txt
+        mode: 0440
+        variables: {}
+      - name: /srv/spigot/app/plugins/ChatControl/rules/sign.txt
+        template: templates/srv/spigot/app/plugins/ChatControl/rules/sign.txt
+        mode: 0440
+        variables: {}
+      - name: /srv/spigot/app/plugins/ChatControl/rules/commands.txt
+        template: templates/srv/spigot/app/plugins/ChatControl/rules/commands.txt
+        mode: 0440
+        variables: {}
+
+      - name: /srv/spigot/app/plugins/PlaytimeRewards/config.yml
+        template: templates/srv/spigot/app/yaml-2.j2
+        mode: 0440
+        variables: "{{ playtimerewards_config }}"
+      - name: /srv/spigot/app/plugins/PlaytimeRewards/lang.yml
+        template: templates/srv/spigot/app/yaml-2.j2
+        mode: 0440
+        variables: "{{ playtimerewards_lang }}"
+      - name: /srv/spigot/app/plugins/PlaytimeRewards/rewards.yml
+        template: templates/srv/spigot/app/yaml-2.j2
+        mode: 0440
+        variables: "{{ playtimerewards_rewards }}"
+
+      - name: /srv/spigot/app/plugins/bStats/config.yml
+        template: templates/srv/spigot/app/yaml-2.j2
+        mode: 0440
+        variables:
+          enabled: false
+          # serverUuid: 12345678-1234-1234-1234-12345678901
+          logFailedRequests: true
+
+      - name: /srv/spigot/app/plugins/PluginMetrics/config.yml
+        template: templates/srv/spigot/app/yaml-2.j2
+        mode: 0440
+        variables:
+          opt-out: false
+          # guid: 12345678-1234-1234-1234-12345678901
+          debug: true

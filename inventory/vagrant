@@ -1,0 +1,2 @@
+# Disable host checking to not mess up the production ssh host key when connecting to vagrant
+minecraft-anarchy.org ansible_host=10.255.255.5 ansible_ssh_common_args='-o StrictHostKeyChecking=no'

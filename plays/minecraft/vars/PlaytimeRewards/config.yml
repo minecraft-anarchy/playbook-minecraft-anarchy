@@ -1,0 +1,59 @@
+playtimerewards_config:
+  # Config for PlaytimeRewards
+  # PlaytimeRewards by ExoBiTe @https://www.spigotmc.org/resources/60266/
+  # Main Configuration
+  Main:
+    # Define your color-char here. Use it in the rewards.yml
+    ColorChar: '&'
+    # Enable or disable mysql here. If enabled, make sure to insert your mysql-data below.
+    MySQL: false
+    # Do you just want to see Player�s playtime and AfkTime without Rewarding? Set this to true
+    # It will completely disable the Rewarding System, resulting in using less Performance.
+    DisableRewards: false
+    # Set the delay between the automatic save-intervals. Set to 0 to disable auto-saving (not recommended!).
+    # As this Plugin only writes and reads data form files/mysql upon play login and quit, there may be a chance to data-loss
+    # when the server crashes. Auto-Save writes all data every interval to files/mysql. This prevents data-loss.
+    DataSaveInterval: 1800  # Seconds
+    # You want to get always the Build of the Plugin? Simply set this to true.
+    # Enable SearchBeta to always get the latest Build.
+    # searchUpdates needs to be true!
+    AutoUpdate: true
+    # Defines when a newer Version get�s recognized as newer. It only compares the Version until the named Part. The Versions Parts are
+    # Major.Minor.Snapshot.B1.B2 so for example v2.9.3.0.1 .
+    WhenToUpdate: Minor
+    # Enter the Amount how many of the best Players get shown with /pttop.
+    TopAmount: 10
+    # The Amount how many Seconds the Plugin waits to let Players earn Rewards after their Login.
+    # May be usable for Servers with the Plugins AuthMe etc.
+    LoginDelay: 2
+    # If set to true, the Player receives a Message (NOTIFY_PLAYER_REWARD_EARNING_ON) when they are able to earn Rewards. False hides this Message
+    SendRewardEarningMessage: true
+    # If set to true, it outputs console Notifications when a Player logs in, and his Minecraft Playtime is x seconds bigger/smaller
+    # than the last Playtime the Plugins knows from him. May help to detect server crashes. Set to 0 to disable it.
+    NotifyPlaytimeDifference: 0
+
+  Afk:
+    # The Amount of Seconds until the Player gets flagged as Afk, and doesn�t receive playtime anymore.
+    # Set to 0 to disable the afk-checker.
+    AfkTimer: 0
+    # if set to true, the Player receives Messages when he gets flagged as AFK and returns Back.
+    AfkNotification: true
+    # If set to true, Players Interacting (e.g. Right/Left Click) will reset their Afk-Status.
+    CancelOnInteract: true
+    # If set to true, Players sending a Chatmessage will reset their Afk-Status.
+    CancelOnChat: true
+    # If set to true, Players Moving(Just Moving, not looking around) will reset their Afk-Status.
+    CancelOnMove: true
+    # If set to true, Players Looking around will reset their Afk-Status.
+    CancelOnLook: true
+
+  # MySQL:
+  #   # Main MySQL Connection Data. Make sure that the specified user has enough rights.
+  #   Host: localhost
+  #   Port: 3306
+  #   User: root
+  #   Password: password
+  #   Database: minecraftserver
+  #
+  #   # Uses SSL on the SQL Connections.
+  #   useSSL: false

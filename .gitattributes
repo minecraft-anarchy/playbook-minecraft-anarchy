@@ -1,0 +1,4 @@
+inventory/extra_vars/secrets.yml filter=git-crypt diff=git-crypt
+terraform/utilities/terraform.tfstate filter=git-crypt diff=git-crypt
+terraform/utilities/terraform.tfstate.backup filter=git-crypt diff=git-crypt
+

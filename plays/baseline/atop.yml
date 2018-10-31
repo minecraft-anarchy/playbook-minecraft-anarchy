@@ -1,0 +1,6 @@
+- hosts: all
+  become: yes
+  vars:
+    atop_log_interval: 120
+  roles:
+    - role-atop

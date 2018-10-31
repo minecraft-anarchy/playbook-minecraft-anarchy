@@ -1,0 +1,33 @@
+playtimerewards_rewards:
+
+  # Updated Reward Config File for PlaytimeRewards
+  # PlaytimeRewards by ExoBiTe @https://www.spigotmc.org/resources/60266/
+  # List of all Items can be found here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
+  # List of all Sounds can be found here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
+  # List of all Particles can be found here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Particle.html
+  # List of all Enchantments can be found here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/enchantments/Enchantment.html
+  SimpleRewards:
+
+    20_seconds:
+      TimeMinimum: 20
+      TimeMaximum: 30
+      CountType: 'PLAYTIME'
+      DisplayName: '20 Seconds Reward'
+      MultipleObtainable: false
+      PlayerMessages:
+      - 'You played for 20 Seconds, enjoy your Reward'
+      RewardConsole:
+      - 'give <PLAYER> minecraft:steak 12'
+
+    60_seconds:
+      TimeMinimum: 60
+      TimeMaximum: 70
+      CountType: 'PLAYTIME'
+      DisplayName: 'One Minute Reward'
+      MultipleObtainable: false
+      PlayerMessages:
+      - 'You played for one Minute, enjoy your Reward'
+      GlobalMessages: []
+      RewardConsole:
+      - 'give <PLAYER> minecraft:stick 2'
+      - 'give <PLAYER> minecraft:diamond 3'

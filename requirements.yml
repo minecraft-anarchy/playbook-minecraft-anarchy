@@ -1,0 +1,24 @@
+- src: https://github.com/blunix/role-shorewall
+  name: role-shorewall
+  version: 1.1.1
+  scm: git
+
+- src: https://github.com/blunix/role-ntp
+  name: role-ntp
+  version: 1.0.2
+  scm: git
+
+- src: https://github.com/blunix/role-atop
+  name: role-atop
+  version: 1.0.0
+  scm: git
+
+- src: https://github.com/blunix/role-letsencrypt
+  name: role-letsencrypt
+  scm: git
+  version: 1.0.4
+
+- src: https://github.com/minecraft-anarchy/role-spigot
+  name: role-spigot
+  scm: git
+  version: 1.0.0

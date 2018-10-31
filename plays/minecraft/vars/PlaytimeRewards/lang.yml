@@ -1,0 +1,55 @@
+playtimerewards_lang:
+  
+  # Notifications/Messages
+  NOTIFY_ERR_P_KICK_DATAERR: '&4Sorry, there was an error with loading your Data. Please press F3 + F2 and send the screenshot to minecraft-anarchy@mailbox.org. Thank you.'
+  NOTIFY_PLAYER_IS_AFK: '&eYou are now flagged as AFK.'
+  NOTIFY_PLAYER_IS_BACK: '&eWelcome to a world without rules'
+  NOTIFY_CONSOLE_AUTO_SAVE: 'PlaytimeRewards is doing an Auto-Save now.'
+  NOTIFY_PLAYER_REWARD_EARNING_ON: '&aYou will get automatic Rewards for time spend on the Server. /playtimerewards'
+
+  # Console Messages (Recommend to not change them, as no Player sees them.)
+  SYS_AUTOUPDATE_NOTFOUND: 'You are running on the latest PlaytimeRewards!'
+  SYS_AUTOUPDATE_DOWNLOADING: 'Found Version VAR[0]! Downloading...'
+  SYS_AUTOUPDATE_DONE: 'New Version downloaded. Restart the Server to run the new Version.'
+  SYS_AUTOUPDATE_TITLE: 'Contents of new Version: VAR[0]'
+  SYS_AUTOUPDATE_REMOVED: 'Couldnt find the downloaded File. Did it got deleted?'
+  SYS_CFG_DETECT_PT_DIFF: 'Detected a Playtime Difference of VAR[0]s for UID VAR[1]!'
+  SYS_RW_ERR_DISABLING: 'An error ocurred at Reward VAR[0]. Disabling the Reward... Check your rewards file.\nERROR: VAR[1]'
+  SYS_RW_DUPLICATE: 'Duplicate Reward VAR[0] found. Fix your rewards file.'
+
+  # Error Messages (Recommend to not change them, as no Player sees them.)
+  ERR_GUI_WRONG_ARGS: 'Wrong Args given for GUI-Function call VAR[0]!'
+  ERR_NO_GUIHOLD_INSTANCE: 'No GuiHolder Instance found for Object VAR[0]!'
+  ERR_GUI_NOT_FOUND: 'No GUI VAR[0].VAR[1] found!'
+  ERR_GUI_MOD_NOT_FOUND: 'No GUI-Mod VAR[0] found!'
+  ERR_MISSING_MYSQL_DATA: 'Missing MySQL-Data. Make sure you have entered every needed Data!'
+  ERR_DISABLE_MYSQL: 'Could not connect to MySQL. Disabling Plugin.'
+  ERR_NO_STATISTIC_FOUND: 'Could not find a Playtime Statistic for your Minecraft Version. Disabling Plugin...'
+
+  # Command Messages
+  CMD_ERR_NO_PERMISSION: '&4Permission denied.'
+  CMD_ERR_REWARDS_DISABLED: '&4The Rewards are disabled. Enable them in the Config.'
+  CMD_ERR_PLAYER_NOT_FOUND: '&4Could not find the Player VAR[0].'
+  CMD_ERR_REWARD_NOT_FOUND: '&4Could not find the Reward VAR[0].'
+  CMD_ERR_NO_NUMBER: '&4VAR[0] is not a Number.'
+  CMD_ERR_UNKNOWN_CT: '&4Unknown CountType VAR[0].'
+  CMD_ERR_NO_CONSOLE: '&4You can not execute this Command as the Console.'
+  CMD_SUCCESS_PT_OUTPUT_NOT_AFK: '&aPlaytime: VAR[0] Hours, VAR[1] Minutes and VAR[2] Seconds'
+  CMD_SUCCESS_PT_OUTPUT_IS_AFK: '&7Playtime: VAR[0] Hours, VAR[1] Minutes and VAR[2] Seconds'
+  CMD_ERR_PT_OUTPUT_CONSOLE_SENDER: '&4You need to specify a Player as Console!'
+  CMD_SUCCESS_RELOAD_STARTED: '&7Reloading the Config file...'
+  CMD_SUCCESS_RELOAD_FINISHED: '&aReload done!'
+  CMD_SUCCESS_PTR_GIVERWARD: '&aYou gave &fVAR[0] &athe Reward VAR[1].'
+  CMD_SUCCESS_PTR_SETTIME: '&aYou changed &fVAR[0]s &6VAR[1] &ato &bVAR[2]!'
+  CMD_ERR_PTR_SETTIME: '&4Could not change the Time.'
+  CMD_SUCCESS_PTR_LISTREWARDS_HEADER: '&aListing VAR[0] Rewards: InternalName | DisplayName'
+  CMD_SUCCESS_PTR_LISTREWARDS_FORMAT: '&aVAR[0] &7| &aVAR[1]'
+  CMD_SUCCESS_PTT_LIST_HEADER: 'Showing the top VAR[0] Players:'
+  CMD_SUCCESS_PTT_LIST_FORMAT: '&aVAR[0]&6. VAR[1]&8: &6VAR[2]'
+
+  # Inventory Texts
+  INV_EDIT_NAME: '&2Edit Reward VAR[0]'
+  INV_EDIT_SAVEITEM_NAME: '&aSAVE'
+  INV_EDIT_SAVEITEM_LORE: '&aSaves the displayed Item as Reward.'
+  INV_EDIT_CANCELITEM_NAME: '&4CANCEL'
+  INV_EDIT_CANCELITEM_LORE: '&4Leaves the Editing Mode without any Changes.'

@@ -1,0 +1,130 @@
+- hosts: minecraft-anarchy.org
+  vars_files:
+    - ../../inventory/secrets.yml
+  vars:
+    shorewall_enabled: yes
+    shorewall_disable_ipv6: 'Yes'
+
+    shorewall_interfaces:
+      - name: 'eth0'
+        zone: pub
+        options: "nosmurfs,routefilter=2,tcpflags,dhcp,optional"
+
+    shorewall_policies:
+      # Reject outgoing by default and log
+      - source: $FW
+        dest: pub
+        policy: REJECT
+        log_level: info
+      # DROP incoming by default
+      - source: pub
+        dest: $FW
+        policy: DROP
+      # Reject all others by default and log
+      - source: all
+        dest: all
+        policy: REJECT
+        log_level: info
+
+    shorewall_zones:
+      # loopback zone
+      - name: fw
+        in_options: ""
+        options: ""
+        out_options: ""
+        type: firewall
+      # public internet
+      - name: pub
+        in_options: ""
+        options: "dhcp"
+        out_options: ""
+        type: ipv4
+
+
+    shorewall_rules:
+      - section: NEW
+        rules:
+
+          # Incoming
+          - name: allow incoming SSH from the admin gateways
+            src: "pub:{{ server_admin_gateways | join(',') }}"
+            dest: "$FW:{{ server_admin_ip }}"
+            action: SSH(ACCEPT)
+
+          - name: allow incoming minecraft traffic on public IP
+            src: pub
+            dest: "$FW:{{ server_public_ip }}"
+            dest_ports: 25565
+            proto: tcp
+            action: ACCEPT
+
+          - name: allow incoming http traffic from pub to public IP
+            src: pub
+            dest: "$FW:{{ server_public_ip }}"
+            proto: tcp
+            dest_ports: 80
+            action: ACCEPT
+
+          - name: allow incoming https traffic from pub to public IP
+            src: pub
+            dest: "$FW:{{ server_public_ip }}"
+            proto: tcp
+            dest_ports: 443
+            action: ACCEPT
+
+          # Outgoing
+          - name: allow important ICMP (route-negotiation and time-exceeded)
+            src: $FW
+            dest: pub
+            proto: icmp
+            action: AllowICMPs(ACCEPT)
+
+          - name: allow outgoing queries to cloud providers DNS servers
+            src: $FW
+            dest: "pub:{{ cloud_provider_dns_servers | join(',') }}"
+            action: DNS(ACCEPT)
+
+          - name: allow outgoing ntp queries
+            src: $FW
+            dest: "pub:{{ cloud_provider_ntp_servers | join(',') }}"
+            action: NTP(ACCEPT)
+
+          - name: allow cloning git repositories
+            src: $FW
+            dest: pub
+            action: Git(ACCEPT)
+
+          - name: allow outgoing SSMTP
+            src: $FW
+            dest: pub
+            action: SMTP(ACCEPT)
+
+          - name: allow contacting hkp servers for gpg public keys
+            src: $FW
+            dest: pub
+            action: HKP(ACCEPT)
+
+          - name: allow outgoing HTTP for apt
+            src: $FW
+            dest: pub:mirror.hetzner.de,ppa.launchpad.net
+            proto: tcp
+            dest_ports: 80
+            action: ACCEPT
+
+          - name: allow outgoing HTTPS to hub.spigotmc.org for the spigot build tools 
+            src: $FW
+            dest: pub:104.27.200.92,104.27.201.92
+            proto: tcp
+            dest_ports: 443
+            action: ACCEPT
+
+  roles:
+    - role: role-shorewall
+
+
+  post_tasks:
+    - name: enable shorewall
+      service:
+        name: shorewall
+        enabled: yes
+        state: started

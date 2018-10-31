@@ -1,0 +1,54 @@
+server_properties:
+  # Privacy
+  # This seems to send the IPs of players to mojang: https://www.spigotmc.org/threads/server-properties-prevent-proxy-connections.198666/#post-2072870
+  prevent-proxy-connections: "false"
+  # Check with mojang if the user exists
+  online-mode: "false"
+  # Can be used for webapps to show the users online
+  enable-query: "false"
+  # Determines if the server can send anonymous data to http://snoop.minecraft.com
+  snooper-enabled: "false"
+
+  # Gameplay
+  allow-flight: "false"
+  allow-nether: "true"
+  difficulty: 3
+  force-gamemode: "true"
+  gamemode: 0
+  generate-structures: "true"
+  generator-settings:
+  hardcore: "false"
+  max-build-height: 256
+  max-world-size: 29999984
+  # Thank you http://minecraft.tools/en/motd.php (but you guys need HTTPS://)
+  motd: '\u00a79\u00a7lWELCOME TO \u00a7c\u00a7l\u24b6\u00a79\u00a7l WORLD WITHOUT \u00a79\u00a7l\u00a7o\u00a7mRULES\u00a7r\n'
+  op-permission-level: 4
+  player-idle-timeout: 0
+  pvp: "true"
+  resource-pack:
+  resource-pack-sha1:
+  spawn-animals: "true"
+  spawn-monsters: "true"
+  spawn-npcs: "true"
+  view-distance: 10
+
+  # Hosting
+  enforce-whitelist: "false"
+  level-name: minecraft-anarchy
+  # moved to secrets.yml
+  level-seed: "{{ spigot_level_seed }}"
+  level-type: DEFAULT
+  max-players: 16
+  max-tick-time: 60000
+  network-compression-threshold: 256
+  # has to be empty to listen on 0.0.0.0 so its reachable from tor too
+  server-ip:
+  server-port: 25565
+  # Linux server performance improvements: optimized packet sending/receiving on Linux (?)
+  use-native-transport: "true"
+  white-list: "false"
+
+  # Admins
+  broadcast-console-to-ops: "true"
+  enable-command-block: "false"
+  enable-rcon: "false"
